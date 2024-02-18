@@ -6,84 +6,94 @@ import 'package:tr_task/core/constants/text_styles.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
-    super.key,
+    super.key, required this.avatarUrl, required this.price, required this.productName, this.onTapCard, this.onTapCartIcon,
   });
-
+  final String avatarUrl;
+  final String price;
+  final String productName;
+  final GestureTapCallback? onTapCard;
+  final GestureTapCallback? onTapCartIcon;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: SizedBox(
-                height: 96.h,
-                width: double.maxFinite,
-                child: CachedNetworkImage(
-                  imageUrl:
-                  "https://api.faraaz.info/storage/CMS/1697960607.jpeg",
-                  fit: BoxFit.fill,
+    return GestureDetector(
+      onTap: onTapCard,
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: SizedBox(
+                  height: 96.h,
+                  width: double.maxFinite,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                  avatarUrl,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Text(
-              'Beef Cheese Burger Farhan',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyle.captionMedium,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Row(
+              const SizedBox(
+                height: 12,
+              ),
+              Text(
+                productName,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyle.captionMedium,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Row(
 
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.natural6,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 9,),
-                      child: Center(
-                        child: Text(
-                          '\$ 77',
-                          style: AppTextStyle.captionMedium,
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.natural6,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 9,),
+                        child: Center(
+                          child: Text(
+                            '\$ $price',
+                            style: AppTextStyle.captionMedium,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(width: 8),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.natural6,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 9,),
-                      child: Center(
-                        child: Icon(
-                          Icons.add_shopping_cart_rounded,
-                          size: 18,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: onTapCartIcon,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.natural6,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 9,),
+                          child: Center(
+                            child: Icon(
+                              Icons.add_shopping_cart_rounded,
+                              size: 18,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              ],
-            )
-          ],
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

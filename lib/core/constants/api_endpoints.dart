@@ -1,5 +1,5 @@
 class ApiEndPoints {
-  static const String baseUrl = "https://api.lms.tikweb.com/api";
+  static const String baseUrl = "https://jsonplaceholder.org";
 
-  static const String login = "/login";
+  static const String posts = "/posts";
 }
