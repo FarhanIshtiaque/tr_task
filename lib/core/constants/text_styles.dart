@@ -169,7 +169,7 @@ abstract class AppTextStyle {
   static const TextStyle captionMedium = TextStyle(
     fontFamily: 'Poppins',
     fontSize: 14,
-    height: 1.71,
+    height: 1.51,
     fontWeight: FontWeight.w500,
   );
 
