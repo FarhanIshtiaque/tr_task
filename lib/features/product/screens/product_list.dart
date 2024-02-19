@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tr_task/config/routes/app_pages.dart';
 import 'package:tr_task/core/constants/app_colors.dart';
 import 'package:tr_task/core/constants/text_styles.dart';
+import 'package:tr_task/features/cart/data/cart_model.dart';
 import 'package:tr_task/features/product/controller/product_list_controller.dart';
 import 'package:tr_task/features/product/screens/widgets/product_card.dart';
 import 'package:tr_task/features/product/screens/widgets/product_card_shimmer.dart';
@@ -21,7 +22,14 @@ class ProductList extends StatelessWidget {
           style: AppTextStyle.body2Medium,
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
+          IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.CART);
+              },
+              icon: const Icon(
+                Icons.shopping_cart,
+                color: AppColors.black,
+              ))
         ],
       ),
       body: Padding(
@@ -29,7 +37,7 @@ class ProductList extends StatelessWidget {
         child: Obx(
           () => productListController.isLoading.value
 
-          /// shimmer loading effect on loading
+              /// shimmer loading effect on loading
               ? GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -55,9 +63,23 @@ class ProductList extends StatelessWidget {
                           .toString(),
                       productName:
                           productListController.productList[index].title,
-                      onTapCard: (){
-                        Get.toNamed(Routes.PRODUCTDETAILS,arguments: productListController.productList[index].id);
+                      onTapCard: () {
+                        Get.toNamed(Routes.PRODUCTDETAILS,
+                            arguments:
+                                productListController.productList[index].id);
                       },
+                      onTapCartIcon: () {
+                        Cart cartData = Cart(
+                          count: 1,
+                          imageUrl: productListController.productList[index].thumbnail,
+                          price:productListController.productList[index].id,
+                          name: productListController.productList[index].title,
+                          id: productListController.productList[index].id,
+                        );
+
+                        productListController.addToCart(cartData);
+                      },
+
                     );
                   }),
         ),

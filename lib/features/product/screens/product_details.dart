@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tr_task/config/routes/app_pages.dart';
 import 'package:tr_task/core/constants/app_colors.dart';
 import 'package:tr_task/core/constants/app_values.dart';
 import 'package:tr_task/core/constants/text_styles.dart';
 import 'package:tr_task/core/resource/widgets/primary_button.dart';
+import 'package:tr_task/features/cart/data/cart_model.dart';
 import 'package:tr_task/features/product/controller/product_details_controller.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -22,7 +24,9 @@ class ProductDetails extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.CART);
+              },
               icon: const Icon(
                 Icons.shopping_cart,
                 color: AppColors.black,
@@ -82,17 +86,32 @@ class ProductDetails extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      PrimaryButton(
-                          onPressed: () {},
-                          buttonNameWidget: const Text(
-                            'Add to cart',
-                            style: AppTextStyle.button2,
-                          )),
-                      SizedBox(height: 40,),
+                      const SizedBox(
+                        height: 40,
+                      ),
                     ],
                   ),
                 ),
               ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: PrimaryButton(
+          onPressed: () async {
+            Cart cartData = Cart(
+                id: productDetailsController.productDetails.id,
+                name: productDetailsController.productDetails.title,
+                price: productDetailsController.productDetails.id,
+                imageUrl: productDetailsController.productDetails.thumbnail,
+                count: 1);
+            await productDetailsController.addToCart(cartData);
+          },
+          buttonNameWidget: const Text(
+            'Add to cart',
+            style: AppTextStyle.button2,
+          ),
+        ),
       ),
     );
   }
