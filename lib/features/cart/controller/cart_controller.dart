@@ -1,5 +1,5 @@
+import 'package:confetti/confetti.dart';
 import 'package:get/get.dart';
-import 'package:tr_task/core/helper/logger.dart';
 import 'package:tr_task/core/resource/injection_container.dart';
 import 'package:tr_task/core/resource/local_storage/local_storage.dart';
 import '../data/cart_model.dart';
@@ -7,12 +7,15 @@ import '../data/cart_model.dart';
 class CartController extends GetxController {
   var isLoading = false.obs;
   List<Cart> cartList = [];
+  late ConfettiController controllerTopCenter;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     getCartList();
+    controllerTopCenter =
+        ConfettiController(duration: const Duration(seconds: 4));
   }
 
   getCartList() async {
@@ -36,6 +39,7 @@ class CartController extends GetxController {
     update();
   }
 
+  ///  decrement product amount with price when clicked on the plus button also remove from cart when amount is 0
   decrementProductAmount({required int index}) {
     if (cartList[index].count == 1) {
       sl<LocalStorage>().delete(cartList[index].id!);

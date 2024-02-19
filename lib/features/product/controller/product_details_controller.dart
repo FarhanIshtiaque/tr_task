@@ -47,6 +47,7 @@ class ProductDetailsController extends GetxController{
     }
   }
 
+  /// add product to sqflite database
   addToCart(Cart cart)async{
 
     bool status = await sl<LocalStorage>().addCart(cart);
