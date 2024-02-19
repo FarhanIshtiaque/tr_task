@@ -21,7 +21,7 @@ class ProductList extends StatelessWidget {
           style: AppTextStyle.body2Medium,
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
+          IconButton(onPressed: () {Get.toNamed(Routes.CART);}, icon: const Icon(Icons.shopping_cart,color: AppColors.black,))
         ],
       ),
       body: Padding(

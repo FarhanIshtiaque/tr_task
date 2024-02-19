@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tr_task/config/routes/app_pages.dart';
 import 'package:tr_task/core/constants/app_colors.dart';
 import 'package:tr_task/core/constants/app_values.dart';
 import 'package:tr_task/core/constants/text_styles.dart';
@@ -22,7 +23,9 @@ class ProductDetails extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.CART);
+              },
               icon: const Icon(
                 Icons.shopping_cart,
                 color: AppColors.black,
@@ -88,7 +91,7 @@ class ProductDetails extends StatelessWidget {
                             'Add to cart',
                             style: AppTextStyle.button2,
                           )),
-                      SizedBox(height: 40,),
+                      const SizedBox(height: 40,),
                     ],
                   ),
                 ),
