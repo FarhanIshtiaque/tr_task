@@ -4,34 +4,34 @@ import 'package:tr_task/config/network_service/network_service.dart';
 import 'package:tr_task/core/constants/api_endpoints.dart';
 import 'package:tr_task/features/product/data/product_list_model.dart';
 
-class ProductListController extends GetxController{
+class ProductDetailsController extends GetxController{
   HttpService httpService = HttpService();
   var isLoading = false.obs;
-  var productList = <ProductModel>[].obs;
+  late ProductModel productDetails;
+  // arguments
+  final productId = Get.arguments;
+
+
   @override
   void onInit() {
     super.onInit();
     httpService.init();
-    getProductList();
+    getProductDetails(id: productId);
   }
 
 
   /// get list of products from api
-  Future<void> getProductList() async {
+  Future<void> getProductDetails({required int id}) async {
     try {
       isLoading(true);
       final result =
-      await httpService.request(url: ApiEndPoints.posts, method: Method.GET,);
+      await httpService.request(url: '${ApiEndPoints.posts}/$id', method: Method.GET,);
 
       if (result != null) {
         if (result is Response) {
           var data = result.data;
           if (result.statusCode == 200) {
-
-            for (var item in data) {
-              productList.add(ProductModel.fromJson(item));
-            }
-
+            productDetails = ProductModel.fromJson(data);
             isLoading(false);
           }
         } else {

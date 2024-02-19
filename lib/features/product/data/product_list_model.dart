@@ -1,4 +1,4 @@
-class ProductListModel {
+class ProductModel {
   int id;
   String slug;
   String url;
@@ -12,7 +12,7 @@ class ProductListModel {
   String updatedAt;
   int userId;
 
-  ProductListModel({
+  ProductModel({
     required this.id,
     required this.slug,
     required this.url,
@@ -27,7 +27,7 @@ class ProductListModel {
     required this.userId,
   });
 
-  factory ProductListModel.fromJson(Map<String, dynamic> json) => ProductListModel(
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
     id: json["id"],
     slug: json["slug"],
     url: json["url"],
