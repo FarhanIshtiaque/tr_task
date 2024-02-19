@@ -1,5 +1,3 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,8 +8,19 @@ import 'package:tr_task/core/resource/widgets/primary_textfield.dart';
 class CartCard extends StatelessWidget {
   const CartCard({
     super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.price,
+    required this.count,
+    this.onTapIncrement, this.onTapDecrement,
   });
 
+  final String imageUrl;
+  final String title;
+  final int price;
+  final String count;
+  final GestureTapCallback? onTapIncrement;
+  final GestureTapCallback? onTapDecrement;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,25 +40,24 @@ class CartCard extends StatelessWidget {
                     height: 74.h,
                     width: 74.h,
                     child: CachedNetworkImage(
-                      imageUrl:
-                      'https://dummyimage.com/200x200/FFFFFF/lorem-ipsum.png&text=jsonplaceholder.org',
+                      imageUrl: imageUrl,
                       fit: BoxFit.fill,
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 12,
+                  width: 12,
                 ),
                 Flexible(
                   child: Column(
                     children: [
-                      const Text(
-                        'Beef Cheese Burger Farh...fa fafaf afaf a',
+                      Text(
+                        title,
                         style: AppTextStyle.body2,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Row(
@@ -57,54 +65,51 @@ class CartCard extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                                 color: AppColors.natural6,
-                                borderRadius:
-                                BorderRadius.circular(8)),
+                                borderRadius: BorderRadius.circular(8)),
                             child: Padding(
-                              padding:
-                              const EdgeInsets.all(4.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: Row(
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color:
-                                        AppColors.primary,
-                                        borderRadius:
-                                        BorderRadius
-                                            .circular(8)),
-                                    child: const Padding(
-                                      padding:
-                                      EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 15,
-                                        color: AppColors.white,
+                                  InkWell(
+                                    onTap:onTapIncrement,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: AppColors.natural2,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 15,
+                                          color: AppColors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                   const SizedBox(
                                     width: 12,
                                   ),
-                                  const Text(
-                                    '1',
+                                  Text(
+                                    count,
                                     style: AppTextStyle.caption,
                                   ),
                                   const SizedBox(
                                     width: 12,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color:
-                                        AppColors.primary,
-                                        borderRadius:
-                                        BorderRadius
-                                            .circular(8)),
-                                    child: const Padding(
-                                      padding:
-                                      EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.remove,
-                                        size: 15,
-                                        color: AppColors.white,
+                                  InkWell(
+                                    onTap: onTapDecrement,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: AppColors.natural2,
+                                          borderRadius: BorderRadius.circular(8)),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 15,
+                                          color: AppColors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -115,8 +120,8 @@ class CartCard extends StatelessWidget {
                           const SizedBox(
                             width: 16,
                           ),
-                          const Text(
-                            '\$ 70',
+                          Text(
+                            '\$ $price',
                             style: AppTextStyle.body2Medium,
                           )
                         ],
@@ -124,10 +129,11 @@ class CartCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
               ],
             ),
-            const SizedBox(height: 12,),
+            const SizedBox(
+              height: 12,
+            ),
             const PrimaryTextField(
               // prefixIcon: Icon(Icons.note_alt_rounded),
               hintText: 'write note here',

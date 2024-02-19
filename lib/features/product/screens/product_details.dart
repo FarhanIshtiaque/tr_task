@@ -6,9 +6,6 @@ import 'package:tr_task/config/routes/app_pages.dart';
 import 'package:tr_task/core/constants/app_colors.dart';
 import 'package:tr_task/core/constants/app_values.dart';
 import 'package:tr_task/core/constants/text_styles.dart';
-import 'package:tr_task/core/helper/logger.dart';
-import 'package:tr_task/core/resource/injection_container.dart';
-import 'package:tr_task/core/resource/local_storage/local_storage.dart';
 import 'package:tr_task/core/resource/widgets/primary_button.dart';
 import 'package:tr_task/features/cart/data/cart_model.dart';
 import 'package:tr_task/features/product/controller/product_details_controller.dart';
@@ -101,14 +98,14 @@ class ProductDetails extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: PrimaryButton(
-          onPressed: () {
+          onPressed: () async {
             Cart cartData = Cart(
                 id: productDetailsController.productDetails.id,
                 name: productDetailsController.productDetails.title,
                 price: productDetailsController.productDetails.id,
-                imageUrl: productDetailsController.productDetails.thumbnail);
-            sl<LocalStorage>().addCart(cartData);
-            logger.d(sl<LocalStorage>().fetchAllCarts());
+                imageUrl: productDetailsController.productDetails.thumbnail,
+                count: 1);
+            await productDetailsController.addToCart(cartData);
           },
           buttonNameWidget: const Text(
             'Add to cart',

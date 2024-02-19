@@ -2,6 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:tr_task/config/network_service/network_service.dart';
 import 'package:tr_task/core/constants/api_endpoints.dart';
+import 'package:tr_task/core/constants/app_colors.dart';
+import 'package:tr_task/core/resource/injection_container.dart';
+import 'package:tr_task/core/resource/local_storage/local_storage.dart';
+import 'package:tr_task/features/cart/data/cart_model.dart';
 import 'package:tr_task/features/product/data/product_list_model.dart';
 
 class ProductListController extends GetxController{
@@ -41,5 +45,17 @@ class ProductListController extends GetxController{
     } finally {
       isLoading(false);
     }
+  }
+
+  /// Adding product in cart
+  addToCart(Cart cart)async{
+
+    bool status = await sl<LocalStorage>().addCart(cart);
+    if(status){
+      Get.snackbar("Success", 'Product added to cart',backgroundColor: AppColors.success500);
+    }else{
+      Get.snackbar("Failed", 'Product already added in cart',backgroundColor: AppColors.success500);
+    }
+
   }
 }
