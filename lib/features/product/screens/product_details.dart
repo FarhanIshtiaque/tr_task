@@ -6,7 +6,11 @@ import 'package:tr_task/config/routes/app_pages.dart';
 import 'package:tr_task/core/constants/app_colors.dart';
 import 'package:tr_task/core/constants/app_values.dart';
 import 'package:tr_task/core/constants/text_styles.dart';
+import 'package:tr_task/core/helper/logger.dart';
+import 'package:tr_task/core/resource/injection_container.dart';
+import 'package:tr_task/core/resource/local_storage/local_storage.dart';
 import 'package:tr_task/core/resource/widgets/primary_button.dart';
+import 'package:tr_task/features/cart/data/cart_model.dart';
 import 'package:tr_task/features/product/controller/product_details_controller.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -85,17 +89,32 @@ class ProductDetails extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      PrimaryButton(
-                          onPressed: () {},
-                          buttonNameWidget: const Text(
-                            'Add to cart',
-                            style: AppTextStyle.button2,
-                          )),
-                      const SizedBox(height: 40,),
+                      const SizedBox(
+                        height: 40,
+                      ),
                     ],
                   ),
                 ),
               ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: PrimaryButton(
+          onPressed: () {
+            Cart cartData = Cart(
+                id: productDetailsController.productDetails.id,
+                name: productDetailsController.productDetails.title,
+                price: productDetailsController.productDetails.id,
+                imageUrl: productDetailsController.productDetails.thumbnail);
+            sl<LocalStorage>().addCart(cartData);
+            logger.d(sl<LocalStorage>().fetchAllCarts());
+          },
+          buttonNameWidget: const Text(
+            'Add to cart',
+            style: AppTextStyle.button2,
+          ),
+        ),
       ),
     );
   }
